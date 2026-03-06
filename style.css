@@ -1,0 +1,96 @@
+body, head, html {
+  margin: 0; padding: 0;
+  overflow: hidden; 
+  background: #ddd;
+  touch-action: none;
+}
+
+#canvas-container {
+  width: 100vw;
+  height: 100vh;
+  color: 
+}
+
+#controls {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px;
+  border-radius: 0px;
+  border: none;
+  line-height: 16px;
+  display: flex;
+  min-width: 450px; 
+  align-items: center;
+  text-align:  center;
+  vertical-align: middle;
+}
+
+#color-picker {
+  width: 150px;
+  height: 45px;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 0px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+#coord-text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  min-width: 120px;
+}
+
+#coord-text {
+  color: black;
+}
+
+@media (max-width: 600px) {
+  #controls {
+    min-width: 90vw;
+    padding: 10px;
+    bottom: 15px;
+    border: 1px solid #000;
+    background: rgba(226,226,226,.8);
+  }
+  #color-picker {
+    width: 100px;
+    height: 35px;
+    font-size: 20px;
+    background: transparent;
+  }
+}
+canvas {
+  cursor: crosshair;
+  image-rendering: pixelated;
+}
+#coord-text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  min-width: 120px;
+  color: black;
+  margin-right: 15px;
+}
+body.darkmode {
+  background: rgba(71, 71, 71, .8);
+}
+
+body.darkmode #coord-text,
+body.darkmode #color-picker {
+  color: rgb(226, 226, 226);
+}
+
+body.darkmode #controls {
+  background: rgba(71, 71, 71, .8);
+}
+
+#darktoggle {
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 0px;
+  border: 1px solid black;
+}
