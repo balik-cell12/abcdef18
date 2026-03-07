@@ -8,7 +8,6 @@ body, head, html {
 #canvas-container {
   width: 100vw;
   height: 100vh;
-  color: 
 }
 
 #controls {
@@ -64,7 +63,6 @@ body, head, html {
   }
 }
 canvas {
-  cursor: crosshair;
   image-rendering: pixelated;
 }
 #coord-text {
