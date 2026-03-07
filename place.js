@@ -46,11 +46,18 @@ wCtx.fillRect(0, 0, WORLD_W, WORLD_H);
 
 const toggledark = document.getElementById("darktoggle");
 
-toggledark.addEventListener("click", () => {
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("darkmode");
+  toggledark.textContent = "Light Mode";
+}
+
+toggledark.addEventListener("click", () => 
   document.body.classList.toggle("darkmode");
-  toggledark.textContent = document.body.classList.contains("darkmode") 
-    ? "Light Mode" 
-    : "Dark Mode";
+  
+  const isDark = document.body.classList.contains("darkmode");
+  
+  toggledark.textContent = isDark ? "Light Mode" : "Dark Mode";
+  localStorage.setItem("theme", isDark ? "dark" : "light");
 });
 
 function drawGrid() {
