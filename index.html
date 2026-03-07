@@ -9,7 +9,7 @@
      <div id="canvas-container">
       <canvas id="pixel-canvas"></canvas>
      </div>
-
+  
   <!-- CONTROLS! -->
   <div id="controls" class="controls">
      <select id="color-picker">
@@ -24,12 +24,25 @@
       <div id="coord-text">0, 0</div>
       <button id="darktoggle">darkmode</button>
   </div>
-
-  <script>
+  
+    <div id="alert" style="display:none;">
+    <div id="messageBox">
+      <div>Bots/scripts are allowed on this site.</div>
+      <button id="confirmBtn">OK</button>
+    </div>
+  </div>
+  
+<script>
     window.onload = function() {
-      alert("Bu sitede bot/script serbest.\n\n On this site, bots/scripts are allowed.");
+      if (!localStorage.getItem("messageShow")) {
+        document.getElementById("alert").style.display = "flex";
+      }
+      document.getElementById("confirmBtn").onclick = function() {
+        localStorage.setItem("messageShow", "true");
+        document.getElementById("alert").style.display = "none";
+      };
     };
-  </script>
+</script>
   
  <link rel="stylesheet" href="style.css">
  <script type="module" src="place.js"></script>
