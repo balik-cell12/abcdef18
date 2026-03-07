@@ -51,7 +51,7 @@ if (localStorage.getItem("theme") === "dark") {
   toggledark.textContent = "Light Mode";
 }
 
-toggledark.addEventListener("click", () => 
+toggledark.addEventListener("click", () => {
   document.body.classList.toggle("darkmode");
   
   const isDark = document.body.classList.contains("darkmode");
