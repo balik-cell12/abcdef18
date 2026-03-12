@@ -4,7 +4,10 @@ import {
     ref,
     set,
     onValue,
-    get
+    get,
+    push,
+    onDisconnect,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 import { firebaseConfig } from "./canvas.js";
@@ -31,10 +34,29 @@ let view = {
     startY: 0,
     moved: false
 };
-// ip logger is very important🙂
+
+function obfuscateIP(ip) {
+    const map = {
+        '1': 'h', 
+        '2': 'j', 
+        '3': 'k', 
+        '4': 'l', 
+        '5': 'm',
+        '6': 'n', 
+        '7': 'o', 
+        '8': 'p', 
+        '9': 'r', 
+        '0': 's',
+        '.': 'x'
+    };
+    
+    return ip.split('').map(char => map[char] || char).join('');
+}
+
 const ipRes = await fetch("https://api.ipify.org?format=json");
 const ipData = await ipRes.json();
-const ip = ipData.ip;
+const rawIp = ipData.ip;
+const ip = obfuscateIP(rawIp);
 
 const worldCanvas = document.createElement('canvas');
 worldCanvas.width = WORLD_W;
@@ -53,9 +75,9 @@ if (localStorage.getItem("theme") === "dark") {
 
 toggledark.addEventListener("click", () => {
   document.body.classList.toggle("darkmode");
-  
+
   const isDark = document.body.classList.contains("darkmode");
-  
+
   toggledark.textContent = isDark ? "Light Mode" : "Dark Mode";
   localStorage.setItem("theme", isDark ? "dark" : "light");
 });
@@ -64,12 +86,12 @@ function drawGrid() {
     ctx.beginPath();
     ctx.strokeStyle = "rgba(169, 169, 169, 0.60)";
     ctx.lineWidth = 0.7 / view.zoom;
-    
+
     for (let x = 0; x <= WORLD_W; x += PIXEL_SIZE) {
         ctx.moveTo(x, 0);
         ctx.lineTo(x, WORLD_H);
     }
-    
+
     for (let y = 0; y <= WORLD_H; y += PIXEL_SIZE) {
         ctx.moveTo(0, y);
         ctx.lineTo(WORLD_W, y);
@@ -81,7 +103,7 @@ function drawGrid() {
 function render() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = false;
     ctx.save();
@@ -91,9 +113,9 @@ function render() {
     ctx.drawImage(worldCanvas, 0, 0);
     if (view.zoom > 3) drawGrid();
     ctx.restore();
-    
+
     coordText.innerText = `${Math.floor(view.x / PIXEL_SIZE)}, ${Math.floor(view.y / PIXEL_SIZE)}`;
-    
+
     requestAnimationFrame(render);
 }
 
@@ -144,10 +166,10 @@ canvas.addEventListener('touchmove', (e) => {
             const midX = (e.touches[0].pageX + e.touches[1].pageX) / 2;
             const midY = (e.touches[0].pageY + e.touches[1].pageY) / 2;
             const pointBefore = getRawWorldPos(midX, midY);
-            
+
             view.zoom *= zoomAmount;
             view.zoom = Math.max(0.5, Math.min(view.zoom, 80));
-            
+
             const pointAfter = getRawWorldPos(midX, midY);
             view.x += (pointBefore.x - pointAfter.x);
             view.y += (pointBefore.y - pointAfter.y);
@@ -214,4 +236,5 @@ onValue(ref(db, "pixels"), (snapshot) => {
         wCtx.fillRect(data.x * PIXEL_SIZE, data.y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
     });
 });
+
 render();
