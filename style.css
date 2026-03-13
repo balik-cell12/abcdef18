@@ -35,6 +35,7 @@ body, head, html {
   font-size: 18px;
   font-weight: bold;
   color: black;
+  background: transparent !important;
 }
 
 #coord-text {
@@ -129,4 +130,5 @@ body.darkmode #controls, body.darkmode #pixtax {
  background: rgba(226,226,226,.8);
  text-align: center;
  font-Size: 18px;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
