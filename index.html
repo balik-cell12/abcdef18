@@ -9,11 +9,11 @@
      <div id="canvas-container">
       <canvas id="pixel-canvas"></canvas>
      </div>
-  
+
   <div id="pixtax">
-    <big>Hello World!</big>    
+  Hello World!   
   </div>
-  
+
   <!-- CONTROLS! -->
   <div id="controls" class="controls">
      <select id="color-picker">
@@ -38,11 +38,11 @@
 
 <script>
     window.onload = function() {
-      if (!localStorage.getItem("messageShow")) {
+      if (!localStorage.getItem("message")) {
         document.getElementById("alert").style.display = "flex";
       }
       document.getElementById("confirmBtn").onclick = function() {
-        localStorage.setItem("messageShow", "true");
+        localStorage.setItem("message", "true");
         document.getElementById("alert").style.display = "none";
       };
     };
