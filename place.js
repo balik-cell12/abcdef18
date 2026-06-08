@@ -1,4 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+// piksel vergisi...
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import {
     getDatabase,
     ref,
@@ -10,7 +13,9 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-import { firebaseConfig } from "./canvas.js";
+import {
+    firebaseConfig
+} from "./canvas.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -19,8 +24,8 @@ const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("color-picker");
 const coordText = document.getElementById("coord-text");
 
-const WORLD_W = 304; // 304
-const WORLD_H = 304; // 304
+const WORLD_W = 152;
+const WORLD_H = 152;
 const PIXEL_SIZE = 8;
 
 let view = {
@@ -37,19 +42,19 @@ let view = {
 
 function obfuscateIP(ip) {
     const map = {
-        '1': 'h', 
-        '2': 'j', 
-        '3': 'k', 
-        '4': 'l', 
-        '5': 'm',
-        '6': 'n', 
-        '7': 'o', 
-        '8': 'p', 
-        '9': 'r', 
-        '0': 's',
+        '1': 'H', 
+        '2': 'J', 
+        '3': 'K', 
+        '4': 'L', 
+        '5': 'M',
+        '6': 'N', 
+        '7': 'O', 
+        '8': 'P', 
+        '9': 'R', 
+        '0': 'S',
         '.': 'x'
     };
-    
+
     return ip.split('').map(char => map[char] || char).join('');
 }
 
@@ -69,17 +74,17 @@ wCtx.fillRect(0, 0, WORLD_W, WORLD_H);
 const toggledark = document.getElementById("darktoggle");
 
 if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("darkmode");
-  toggledark.textContent = "Light Mode";
+    document.body.classList.add("darkmode");
+    toggledark.textContent = "Aydınlık Mod";
 }
 
 toggledark.addEventListener("click", () => {
-  document.body.classList.toggle("darkmode");
+    document.body.classList.toggle("darkmode");
 
-  const isDark = document.body.classList.contains("darkmode");
+    const isDark = document.body.classList.contains("darkmode");
 
-  toggledark.textContent = isDark ? "Light Mode" : "Dark Mode";
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+    toggledark.textContent = isDark ? "Aydınlık Mod" : "Karanlık Mod";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 });
 
 function drawGrid() {
@@ -131,9 +136,9 @@ function screenToWorld(sx, sy) {
     const rect = canvas.getBoundingClientRect();
     const x = (sx - rect.left - canvas.width / 2) / view.zoom + view.x;
     const y = (sy - rect.top - canvas.height / 2) / view.zoom + view.y;
-    return { 
-        x: Math.floor(x / PIXEL_SIZE), 
-        y: Math.floor(y / PIXEL_SIZE) 
+    return {
+        x: Math.floor(x / PIXEL_SIZE),
+        y: Math.floor(y / PIXEL_SIZE)
     };
 }
 
@@ -151,7 +156,9 @@ canvas.addEventListener('wheel', (e) => {
 
     view.x += (mouseBefore.x - mouseAfter.x);
     view.y += (mouseBefore.y - mouseAfter.y);
-}, { passive: false });
+}, {
+    passive: false
+});
 
 let lastDist = 0;
 canvas.addEventListener('touchmove', (e) => {
@@ -176,7 +183,9 @@ canvas.addEventListener('touchmove', (e) => {
         }
         lastDist = dist;
     }
-}, { passive: false });
+}, {
+    passive: false
+});
 
 canvas.addEventListener('touchend', () => {
     lastDist = 0;
@@ -201,7 +210,7 @@ window.addEventListener('pointermove', (e) => {
         }
         let nextX = view.x - dx;
         let nextY = view.y - dy;
-        const margin = 0; 
+        const margin = 0;
         view.x = Math.max(-margin, Math.min(nextX, WORLD_W + margin));
         view.y = Math.max(-margin, Math.min(nextY, WORLD_H + margin));
         view.lastX = e.clientX;
